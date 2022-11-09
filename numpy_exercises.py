@@ -21,30 +21,27 @@ a[a < 0]
 a[a > 0]
 
 
-# In[4]:
+# In[5]:
 
 
-new_a = a[a > 0]
-new_a[new_a % 2 == 0]
+a[(a > 0) & (a % 2 == 0)]
 
 
 # In[6]:
 
 
 a + 3
-a[a > 0]
+[(a > 0)]
 
 
-# In[12]:
+# In[13]:
 
 
-new_a = a ** 2
-
-new_a.mean()
-new_a.std()
+print((a**2).mean())
+print((a**2).std())
 
 
-# In[16]:
+# In[14]:
 
 
 a - a.mean()
@@ -56,7 +53,7 @@ a - a.mean()
 (a - a.mean())/a.std()
 
 
-# In[29]:
+# In[18]:
 
 
 import numpy as np
@@ -71,70 +68,63 @@ sum_of_a = sum(a)
 print(sum_of_a)
 
 
-# In[22]:
+# In[19]:
 
 
 # Exercise 2 - Make a variable named min_of_a to hold the minimum of all the numbers in the above list
-
 min_of_a = min(a)
 print(min_of_a)
+
+
+# In[20]:
+
+
+# Exercise 3 - Make a variable named max_of_a to hold the max number of all the numbers in the above list
+max_of_a = max(a)
+print(max_of_a)
+
+
+# In[21]:
+
+
+# Exercise 4 - Make a variable named mean_of_a to hold the average of all the numbers in the above list
+mean_of_a = a.mean()
+print(mean_of_a)
+
+
+# In[22]:
+
+
+# Exercise 5 - Make a variable named product_of_a to hold the product of multiplying all the numbers in the above list together
+product_of_a = np.prod(a)
+print(product_of_a)
 
 
 # In[23]:
 
 
-# Exercise 3 - Make a variable named max_of_a to hold the max number of all the numbers in the above list
-
-max_of_a = max(a)
-print(max_of_a)
-
-
-# In[30]:
-
-
-# Exercise 4 - Make a variable named mean_of_a to hold the average of all the numbers in the above list
-
-mean_of_a = a.mean()
-print(mean_of_a)
-
-
-# In[33]:
-
-
-# Exercise 5 - Make a variable named product_of_a to hold the product of multiplying all the numbers in the above list together
-
-product_of_a = np.prod(a)
-print(product_of_a)
-
-
-# In[37]:
-
-
 # Exercise 6 - Make a variable named squares_of_a. It should hold each number in a squared like [1, 4, 9, 16, 25...]
-
 squares_of_a = a ** 2
 print(squares_of_a)
 
 
-# In[39]:
+# In[24]:
 
 
 # Exercise 7 - Make a variable named odds_in_a. It should hold only the odd numbers
-
 odds_in_a = a[a % 2 == 1]
 print(odds_in_a)
 
 
-# In[40]:
+# In[25]:
 
 
 # Exercise 8 - Make a variable named evens_in_a. It should hold only the evens.
-
 evens_in_a = a[a % 2 == 0]
 print(evens_in_a)
 
 
-# In[46]:
+# In[26]:
 
 
 ## What about life in two dimensions? A list of lists is matrix, a table, a spreadsheet, a chessboard...
@@ -233,7 +223,7 @@ print(np.reshape(b, 6))
 print(b.reshape(6, 1))
 
 
-# In[75]:
+# In[27]:
 
 
 ## Setup 3
@@ -279,7 +269,7 @@ print(c.shape)
 print(np.transpose(c))
 
 
-# In[91]:
+# In[29]:
 
 
 # Exercise 6 - Get the dot product of the array c with c. 
@@ -300,7 +290,7 @@ print((np.transpose(c) * c).sum())
 print((np.transpose(c) * c).prod())
 
 
-# In[99]:
+# In[31]:
 
 
 ## Setup 4
@@ -370,11 +360,11 @@ print(d.shape)
 print(d.transpose())
 
 
-# In[118]:
+# In[32]:
 
 
 # Exercise 10 - Reshape d into an array of 9 x 2
-print(d.reshape(9, 2))
+print(d.reshape(2,9))
 
 
 # In[ ]:
