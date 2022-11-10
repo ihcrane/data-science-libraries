@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[55]:
+# In[2]:
 
 
 import pandas as pd
@@ -27,14 +27,14 @@ fruits.size
 fruits.index
 
 
-# In[21]:
+# In[4]:
 
 
 # 3. Output only the values from fruits.
 fruits.values
 
 
-# In[24]:
+# In[6]:
 
 
 # 4. Confirm the data type of the values in fruits.
@@ -71,7 +71,7 @@ fruits.unique()
 fruits.value_counts()
 
 
-# In[46]:
+# In[9]:
 
 
 # 9. Determine the string value that occurs most frequently in fruits.
@@ -79,45 +79,36 @@ fruits.mode()
 fruits.value_counts().head(1)
 
 
-# In[45]:
+# In[10]:
 
 
 # 10. Determine the string value that occurs least frequently in fruits.
 fruits.value_counts().tail(1)
+fruits.value_counts().nsmallest(n=1, keep='all')
 
 
-# In[56]:
+# In[37]:
 
 
 # 1. Capitalize all the string values in fruits.
-fruits_cap = fruits.str.capitalize()
-fruits_cap
+fruits.str.capitalize()
 
 
-# In[62]:
+# In[36]:
 
 
 # 2. Count the letter "a" in all the string values (use string vectorization).
-fruits_a = fruits.str.count('a')
-fruits_a
+fruits.str.count('a').sort_values()
 
 
-# In[96]:
+# In[43]:
 
 
 # 3. Output the number of vowels in each and every string value.
-def vowel_count(string):
-    vowels = 'aeiou'
-    count = 0
-    for n in string:
-        if n in vowels:
-            count += 1
-    return count
-fruits_with_vowels = fruits.apply(vowel_count)
-fruits_with_vowels
+fruits.str.count('[aeiou]').sort_values()
 
 
-# In[82]:
+# In[38]:
 
 
 # 4. Write the code to get the longest string value from fruits.
@@ -126,11 +117,11 @@ print(fruits[fruits.str.len() == fruits_long])
 print(fruits_long)
 
 
-# In[75]:
+# In[40]:
 
 
 # 5. Write the code to get the string values with 5 or more letters in the name.
-fruits[fruits.str.len() > 5]
+fruits[fruits.str.len() >= 5]
 
 
 # In[85]:
@@ -154,14 +145,11 @@ fruits[fruits.str.contains('berry')]
 fruits[fruits.str.contains('apple')]
 
 
-# In[113]:
+# In[41]:
 
 
 # 9. Which string value contains the most vowels.
-most_vowels = fruits_with_vowels.sort_values().tail(1)
-
-print(fruits.loc[most_vowels])
-most_vowels
+fruits.loc[fruits.str.count('[aeiou]').max()]
 
 
 # In[ ]:
