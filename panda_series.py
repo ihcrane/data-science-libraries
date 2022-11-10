@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
+# In[5]:
 
 
 import pandas as pd
@@ -150,6 +150,128 @@ fruits[fruits.str.contains('apple')]
 
 # 9. Which string value contains the most vowels.
 fruits.loc[fruits.str.count('[aeiou]').max()]
+
+
+# In[6]:
+
+
+import matplotlib as plt
+letters = list('hnvidduckkqxwymbimkccexbkmqygkxoyndmcxnwqarhyffsjpsrabtjzsypmzadfavyrnndndvswreauxovncxtwzpwejilzjrmmbbgbyxvjtewqthafnbkqplarokkyydtubbmnexoypulzwfhqvckdpqtpoppzqrmcvhhpwgjwupgzhiofohawytlsiyecuproguy')
+letters = pd.Series(letters)
+
+
+# In[8]:
+
+
+# 1. Which letter occurs the most frequently in the letters Series?
+letters.value_counts().nlargest(n=1, keep='all')
+
+
+# In[9]:
+
+
+# 2. Which letter occurs the Least frequently?
+letters.value_counts().nsmallest(n=1, keep='all')
+
+
+# In[21]:
+
+
+# 3. How many vowels are in the Series?
+vowels_count = letters.str.count('[aeiou]').sum()
+vowels_count
+
+
+# In[22]:
+
+
+# 4. How many consonants are in the Series?
+consonant_count = len(letters) - vowels_count
+consonant_count
+
+
+# In[23]:
+
+
+# 5. Create a Series that has all of the same letters but uppercased.
+letters.str.upper()
+
+
+# In[31]:
+
+
+# 6. Create a bar plot of the frequencies of the 6 most commonly occuring letters.
+most_common_letters = letters.value_counts().nlargest(n=6, keep='all')
+most_common_letters.plot.bar(title='Most Common letters',rot=0)
+
+
+# In[43]:
+
+
+numbers = ['$796,459.41', '$278.60', '$482,571.67', '$4,503,915.98', '$2,121,418.3', 
+           '$1,260,813.3', '$87,231.01', '$1,509,175.45', '$4,138,548.00', '$2,848,913.80', 
+           '$594,715.39', '$4,789,988.17', '$4,513,644.5', '$3,191,059.97', '$1,758,712.24', 
+           '$4,338,283.54', '$4,738,303.38', '$2,791,759.67', '$769,681.94', '$452,650.23']
+numbers = pd.Series(numbers)
+
+
+# In[41]:
+
+
+# 1. What is the data type of the numbers Series?
+numbers.dtype
+
+
+# In[42]:
+
+
+# 2. How many elements are in the number Series?
+len(numbers)
+
+
+# In[52]:
+
+
+# 3. Perform the necessary manipulations by accessing Series attributes and methods to convert the numbers Series to a numeric data type.
+numbers = numbers.str.replace('$', '').str.replace(',', '')
+numbers = numbers.astype('float')
+
+
+# In[54]:
+
+
+# 4. Run the code to discover the maximum value from the Series.
+numbers.max()
+
+
+# In[55]:
+
+
+# 5. Run the code to discover the minimum value from the Series.
+numbers.min()
+
+
+# In[56]:
+
+
+# 6. What is the range of the values in the Series?
+num_range = numbers.max() - numbers.min()
+num_range
+
+
+# In[70]:
+
+
+# 7. Bin the data into 4 equally sized intervals or bins and output how many values fall into each bin.
+num_bin_series = pd.cut(numbers, [0, 1200000, 2400000, 3600000, 5000000])
+num_bin_series.value_counts()
+
+
+# In[71]:
+
+
+# 8. Plot the binned data in a meaningful way. Be sure to include a title and axis labels.
+num_bin_series.value_counts().plot.bar(title='Numbers Bin Graph', rot=45).set(xlabel='Bin Interval', ylabel='Bin Amount')
 
 
 # In[ ]:
