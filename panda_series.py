@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[8]:
 
 
 import pandas as pd
@@ -152,7 +152,7 @@ fruits[fruits.str.contains('apple')]
 fruits.loc[fruits.str.count('[aeiou]').max()]
 
 
-# In[6]:
+# In[9]:
 
 
 import matplotlib as plt
@@ -272,6 +272,63 @@ num_bin_series.value_counts()
 
 # 8. Plot the binned data in a meaningful way. Be sure to include a title and axis labels.
 num_bin_series.value_counts().plot.bar(title='Numbers Bin Graph', rot=45).set(xlabel='Bin Interval', ylabel='Bin Amount')
+
+
+# In[31]:
+
+
+exam_scores = [60, 86, 75, 62, 93, 71, 60, 83, 95, 78, 65, 72, 69, 81, 96, 80, 85, 92, 82, 78]
+exam_scores =pd.Series(exam_scores)
+
+
+# In[11]:
+
+
+# 1. How many elements are in the exam_scores Series?
+len(exam_scores)
+
+
+# In[13]:
+
+
+# 2. Run the code to discover the minimum, the maximum, the mean, and the median scores for the exam_scores Series.
+print(exam_scores.min())
+print(exam_scores.max())
+print(exam_scores.mean())
+print(exam_scores.median())
+
+
+# In[27]:
+
+
+# 3. Plot the Series in a meaningful way and make sure your chart has a title and axis labels.
+exam_scores_bins = pd.cut(exam_scores, [60, 70, 80, 90, 100])
+exam_scores_bins.value_counts().plot.bar(title='Exam Scores', rot=45).set(xlabel='Scores', ylabel='Number of each Score')
+
+
+# In[32]:
+
+
+# 4. Write the code necessary to implement a curve for your exam_grades Series and save this as curved_grades. Add the necessary points to the highest grade to make it 100, and add the same number of points to every other score in the Series as well.
+curve = 100 - exam_scores.max()
+curved_grades = exam_scores + curve
+curved_grades
+
+
+# In[39]:
+
+
+# 5. Use a method to convert each of the numeric values in the curved_grades Series into a categorical value of letter grades. For example, 86 should be a 'B' and 95 should be an 'A'. Save this as a Series named letter_grades.
+letter_grades = pd.cut(curved_grades, [60, 70, 80, 90, 100], labels=['F','C', 'B', 'A'])
+letter_grades.value_counts()
+
+
+# In[42]:
+
+
+# 6. Plot your new categorical letter_grades Series in a meaninful way and include a title and axis labels.
+letter_grades.value_counts().plot.bar(title='Exam Scores', rot=0).set(
+                        xlabel='Scores', ylabel='Number of each Score')
 
 
 # In[ ]:
