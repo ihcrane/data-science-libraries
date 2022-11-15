@@ -1,2 +1,4 @@
 *.csv
-eng.pyenv.py
+eng.py
+env.py
+*.ipynb_checkpoints*
