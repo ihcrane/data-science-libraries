@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[90]:
+# In[132]:
 
 
 import pandas as pd
@@ -14,20 +14,20 @@ def get_db_url(username, hostname, password, database):
     return url
 
 
-# In[29]:
+# In[195]:
 
 
 url = get_db_url(username, hostname, password, 'employees')
 
 
-# In[30]:
+# In[197]:
 
 
 employees = pd.read_sql('SELECT * FROM employees', url)
 employees
 
 
-# In[33]:
+# In[198]:
 
 
 titles = pd.read_sql('SELECT * FROM titles', url)
@@ -117,13 +117,13 @@ users.merge(roles, how='right')
 users.merge(roles, how='outer')
 
 
-# In[86]:
+# In[231]:
 
 
 # 4. What happens if you drop the foreign keys from the DataFrames and try to merge them?
 users_dropped = users.drop(columns='id')
 roles_dropped = roles.drop(columns='id')
-users_dropped.merge(roles_dropped, how='inner')
+users_dropped.merge(roles_dropped, how='outer')
 
 
 # In[93]:
@@ -215,10 +215,83 @@ mpg.groupby('manufacturer').avg_mileage.agg(['mean'])
 mpg.groupby('is_auto').avg_mileage.agg(['mean']).rename(index={0:'Manual', 1:'Automatic'})
 
 
-# In[ ]:
+# In[170]:
 
 
+# 1. Use your get_db_url function to help you explore the data from the chipotle database.
+chipotle_url = get_db_url(username, hostname, password, 'chipotle')
+chipotle = pd.read_sql('SELECT * FROM orders', chipotle_url)
+chipotle
 
+
+# In[171]:
+
+
+# 2. What is the total price for each order?
+chipotle['item_price'] = chipotle['item_price'].str.replace('$','')
+chipotle
+
+
+# In[172]:
+
+
+chipotle = chipotle.astype({'item_price':float})
+chipotle
+
+
+# In[173]:
+
+
+chipotle.groupby('order_id').item_price.sum()
+
+
+# In[189]:
+
+
+# 3. What are the most popular 3 items?
+chipotle.groupby('item_name').quantity.sum().sort_values(ascending=False).head()
+
+
+# In[188]:
+
+
+# 4. Which item has produced the most revenue?
+chipotle.groupby('item_name').item_price.sum().sort_values(ascending=False).head()
+
+
+# In[204]:
+
+
+# 5. Join the employees and titles DataFrames together.
+emp_title = employees.merge(titles, how='inner', on='emp_no')
+emp_title
+
+
+# In[208]:
+
+
+# 6. For each title, find the hire date of the employee that was hired most recently with that title.
+emp_title.groupby(['title']).hire_date.max()
+
+
+# In[229]:
+
+
+# 7. Write the code necessary to create a cross tabulation of the number of titles by department. 
+## (Hint: this will involve a combination of SQL code to pull the necessary 
+### data and python/pandas code to perform the manipulations.)
+emp_titles = pd.read_sql('SELECT * FROM employees JOIN titles USING(emp_no) WHERE to_date > CURDATE()', url)
+dept_emp = pd.read_sql('SELECT * FROM dept_emp', url)
+departments = pd.read_sql('SELECT * FROM departments', url)
+
+
+# In[230]:
+
+
+emp_title_dept = emp_titles.merge(dept_emp, how='inner', on='emp_no')
+full_db = emp_title_dept.merge(departments, how='inner', on='dept_no')
+
+pd.crosstab(full_db.title, full_db.dept_name)
 
 
 # In[ ]:
